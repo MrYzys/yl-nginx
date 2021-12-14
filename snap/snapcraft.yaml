@@ -10,10 +10,8 @@ grade: stable
 confinement: classic
 
 architectures:
-  - build-on: arm64
-    run-on: [arm64, amd64]
-  - build-on: arm64
-    run-on: [arm64, amd64]
+  - build-on: [arm64, amd64]
+    run-on: all
 #  - build-on: amd64
 #  - build-on: arm64
 #  - build-on: armhf
