@@ -1,4 +1,4 @@
-name: nginx
+name: yl-nginx
 base: core18
 version: '1.20.2'
 summary: nginx server
