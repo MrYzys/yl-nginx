@@ -1,0 +1,62 @@
+name: nginx
+base: core18
+version: '1.20.2'
+summary: nginx server
+description: |
+  nginx is a free, open-source, high-performance HTTP server and reverse proxy, as well as an IMAP/POP3 proxy server.
+contact: unease.browser_0h@icloud.com
+
+grade: stable
+confinement: classic
+
+architectures:
+  - build-on: amd64
+  - build-on: arm64
+#  - build-on: armhf
+#  - build-on: ppc64el
+
+apps:
+  nginx:
+    command: nginx
+    plugs:
+      - home
+  service:
+    command: nginx
+    stop-command: sbin/nginx -s quit
+    reload-command: sbin/nginx -s reload
+    daemon: forking
+    restart-condition: always
+
+parts:
+  nginx:
+    plugin: autotools
+    source: http://nginx.org/download/nginx-1.20.2.tar.gz
+    source-type: tar
+    build-packages:
+      - libpcre3
+      - libpcre3-dev
+      - zlib1g
+      - zlib1g-dev
+      - openssl
+      - libssl-dev
+    stage-packages:
+      - libc6-dev
+    configflags:
+      - --conf-path=/fix-data/etc/nginx/nginx.conf
+      - --error-log-path=/dynamic-data/log/nginx/error.log
+      - --http-log-path=/dynamic-data/log/nginx/access.log
+      - --pid-path=/dynamic-data/pids/nginx/nginx.pid
+      - --lock-path=/dynamic-data/locks/nginx.lock
+      - --http-client-body-temp-path=/dev/shm/nginx_client_body_temp
+      - --http-proxy-temp-path=/dev/shm/nginx_proxy_temp_path
+      - --http-fastcgi-temp-path=/dev/shm/nginx_fastcgi_temp_path
+      - --http-uwsgi-temp-path=/dev/shm/nginx_uwsgi_temp_path
+      - --http-scgi-temp-path=/dev/shm/nginx_scgi_temp_path
+      - --user=app
+      - --group=app
+      - --with-http_ssl_module
+      - --with-http_gzip_static_module
+      - --with-http_stub_status_module
+      - --with-pcre
+      - --with-http_v2_module
+      - --with-stream
