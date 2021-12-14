@@ -9,9 +9,9 @@ contact: unease.browser_0h@icloud.com
 grade: stable
 confinement: classic
 
-architectures:
-  - build-on: amd64
-  - build-on: arm64
+architectures: [arm64, amd64]
+#  - build-on: amd64
+#  - build-on: arm64
 #  - build-on: armhf
 #  - build-on: ppc64el
 
